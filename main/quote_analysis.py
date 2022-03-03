@@ -47,12 +47,9 @@ def count_total_vowels_consonants(quote):
     }
 
 
-def count_repetitions(quote):
-    return "Test"
-
-
+# TODO: add logic for for '1    2    3' stringlike testcases
 def count_average_word_length(quote):
-    words = quote.split(" ")
+    words = quote.strip().split(" ")
     len_sum = 0
 
     for word in words:
@@ -79,3 +76,7 @@ def get_longest_words(quote):
         # words.pop(index_to_delete)
         c -= 1
     return ""
+
+
+def count_repetitions(quote):
+    return "Test"
