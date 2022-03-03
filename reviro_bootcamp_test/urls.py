@@ -15,10 +15,27 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
 
 from main.views import GetQuotesView
 
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Reviro Bootcamp Python Assignment API",
+      default_version='v1',
+      description="YE Quotes with Text Analysis",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="saadatssu@gmail.com"),
+      license=openapi.License(name="MIT License"),
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('kanye-sayings/', GetQuotesView.as_view(), name='quote')
+    path('kanye-sayings/', GetQuotesView.as_view(), name='quote'),
+    path('api/v1/docs/', schema_view.with_ui()),
 ]

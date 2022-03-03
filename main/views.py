@@ -1,4 +1,5 @@
 import requests
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -14,6 +15,7 @@ from main.serializers import QuoteSerializer, QuoteAnalysisSerializer
 
 
 class GetQuotesView(APIView):
+    @swagger_auto_schema(responses={200: QuoteSerializer(many=True)})
     def get(self, request):
         quotes_api_url = "https://api.kanye.rest/"
         counter = 10

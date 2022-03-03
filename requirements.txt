@@ -3,3 +3,4 @@ psycopg2-binary==2.8.5
 djangorestframework==3.11
 python-decouple==3
 requests==2.25.1
+drf-yasg
