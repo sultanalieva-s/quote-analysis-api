@@ -61,21 +61,21 @@ def count_average_word_length(quote):
 
 def get_longest_words(quote):
     words = quote.split(" ")
-    max_lens = []
+    max_lengths = []
     c = 3
     while c:
-        max_len = 0
-        index_to_delete = 0
+        max_length = 0
+        max_length_word_index = 0
 
         for i in range(0, len(words)):
-            if len(words[i]) > max_len:
-                max_len = len(words[i])
-                index_to_delete = i
+            if len(words[i]) > max_length:
+                max_length = len(words[i])
+                max_length_word_index = i
 
-        max_lens.append(max_len)
-        # words.pop(index_to_delete)
+        max_lengths.append(words[max_length_word_index])
+        words.pop(max_length_word_index)
         c -= 1
-    return ""
+    return max_lengths
 
 
 def count_repetitions(quote):
