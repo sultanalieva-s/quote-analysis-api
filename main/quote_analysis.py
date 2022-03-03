@@ -1,42 +1,43 @@
 def count_total_vowels_consonants(quote):
     quote = quote.lower()
+
     total_letters_counter = 0
     total_vowels_counter = 0
     total_consonant_counter = 0
-    vowels = dict({"a": 0, "e": 0, "y": 0, "u": 0, "i": 0, "o": 0})
-    consonants = dict(
-        {
-            "q": 0,
-            "w": 0,
-            "r": 0,
-            "t": 0,
-            "y": 0,
-            "p": 0,
-            "s": 0,
-            "d": 0,
-            "f": 0,
-            "g": 0,
-            "h": 0,
-            "j": 0,
-            "k": 0,
-            "l": 0,
-            "z": 0,
-            "x": 0,
-            "c": 0,
-            "v": 0,
-            "b": 0,
-            "n": 0,
-            "m": 0,
-        }
-    )
+
+    vowels = {"a": True, "e": True, "y": True, "u": True, "i": True, "o": True}
+    consonants = {
+        "q": True,
+        "w": True,
+        "r": True,
+        "t": True,
+        "y": True,
+        "p": True,
+        "s": True,
+        "d": True,
+        "f": True,
+        "g": True,
+        "h": True,
+        "j": True,
+        "k": True,
+        "l": True,
+        "z": True,
+        "x": True,
+        "c": True,
+        "v": True,
+        "b": True,
+        "n": True,
+        "m": True,
+    }
+
     for i in quote:
         if i.isalpha():
             total_letters_counter += 1
 
-        if not vowels.get(i):
+        if vowels.get(i, False):
             total_vowels_counter += 1
 
-        if not consonants.get(i):
+        if consonants.get(i, False):
             total_consonant_counter += 1
 
     return {
@@ -77,4 +78,4 @@ def get_longest_words(quote):
         max_lens.append(max_len)
         # words.pop(index_to_delete)
         c -= 1
-    return ''
+    return ""
