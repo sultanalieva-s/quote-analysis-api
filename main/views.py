@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from main.models import Quote
 from main.quote_analysis import (
     count_total_vowels_consonants,
     count_average_word_length,
@@ -24,13 +25,14 @@ class GetQuotesView(APIView):
 
             quote_serializer = QuoteSerializer(data=response)
 
-            if quote_serializer.is_valid(raise_exception=True):
+            if quote_serializer.is_valid():
                 quote_object = quote_serializer.save()
 
                 total_letters = count_total_vowels_consonants(quote)
                 avg = count_average_word_length(quote)
                 longest_words = get_longest_words(quote)
                 repetitions = count_repetitions(quote)
+
                 quote_analysis_serializer = QuoteAnalysisSerializer(
                     data={
                         "quote": quote_object.id,
@@ -46,6 +48,8 @@ class GetQuotesView(APIView):
                 if quote_analysis_serializer.is_valid(raise_exception=True):
                     quote_analysis_serializer.save()
                     quotes.append(quote_object)
+            else:
+                quotes.append(Quote.objects.get(quote=quote))
 
             counter -= 1
         return Response(
