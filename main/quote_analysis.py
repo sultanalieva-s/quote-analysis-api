@@ -79,4 +79,37 @@ def get_longest_words(quote):
 
 
 def count_repetitions(quote):
-    return "Test"
+    quote = quote.lower().strip()
+    letters = {
+        "q": 0,
+        "w": 0,
+        "r": 0,
+        "t": 0,
+        "y": 0,
+        "p": 0,
+        "s": 0,
+        "d": 0,
+        "f": 0,
+        "g": 0,
+        "h": 0,
+        "j": 0,
+        "k": 0,
+        "l": 0,
+        "z": 0,
+        "x": 0,
+        "c": 0,
+        "v": 0,
+        "b": 0,
+        "n": 0,
+        "m": 0,
+        "a": 0,
+        "e": 0,
+        "o": 0,
+        "u": 0,
+        "i": 0,
+    }
+
+    for i in quote:
+        letters[i] += 1
+
+    return {key: val for key, val in letters.items() if val != 0}
