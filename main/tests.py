@@ -18,7 +18,8 @@ class QuoteAnalysisTestCases(TestCase):
         self.string_7 = 'Ararat 1234567890'
         self.string_8 = 'aAaAaA'
         self.string_9 = 'kKkKkK'
-        self.string_10 = 'People say it\'s enough and I got my point across ... the point isn\'t across until we cross the point'
+        self.string_10 = 'People say it\'s enough and I got my point across ...\
+                            the point isn\'t across until we cross the point'
         self.string_11 = 'one two threee'
         self.empty_string = ''
         self.string_without_letters = '!@#$%^&*'
