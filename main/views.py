@@ -1,3 +1,6 @@
+import datetime
+import logging
+
 import requests
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
@@ -12,6 +15,9 @@ from main.quote_analysis import (
     count_repetitions,
 )
 from main.serializers import QuoteSerializer, QuoteAnalysisSerializer
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 
 class GetQuotesView(APIView):
@@ -51,6 +57,10 @@ class GetQuotesView(APIView):
                     quote_analysis_serializer.save()
                     quotes.append(quote_object)
             else:
+                logger.warning(
+                    "A quote is already exists in the database. Time: "
+                    + str(datetime.datetime.now())
+                )
                 quotes.append(Quote.objects.get(quote=quote))
 
             counter -= 1
