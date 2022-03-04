@@ -19,7 +19,7 @@ Now that you inside the container run the commands: `./manage.py makemigrations`
 To run tests you should go inside container via command `docker exec -it <your-container_name> bash`.
 Then run tests via `./manage.py test`
 
-##Notes about Time Complexity of Analysis Functions
+## Notes about Time Complexity of Analysis Functions
 1. count_total_letters function's time complexity is linear due to for loop which counts every letter
 2. count_average_word_length function runs in O(n)
 3. get_longest_words function runs in O(n)
