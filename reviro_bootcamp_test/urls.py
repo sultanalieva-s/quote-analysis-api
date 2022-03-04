@@ -36,6 +36,6 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('kanye-sayings/', GetQuotesView.as_view(), name='quote'),
+    path('kanye-sayings/', GetQuotesView.as_view(), name='quote-list'),
     path('api/v1/docs/', schema_view.with_ui()),
 ]

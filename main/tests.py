@@ -1,4 +1,6 @@
 from django.test import TestCase, Client
+from django.urls import reverse
+
 from main.quote_analysis import *
 
 client = Client()
@@ -18,8 +20,7 @@ class QuoteAnalysisTestCases(TestCase):
         self.string_7 = 'Ararat 1234567890'
         self.string_8 = 'aAaAaA'
         self.string_9 = 'kKkKkK'
-        self.string_10 = 'People say it\'s enough and I got my point across ...\
-                            the point isn\'t across until we cross the point'
+        self.string_10 = 'People say it\'s enough and I got my point across ... the point isn\'t across until we cross the point'
         self.string_11 = 'one two threee'
         self.empty_string = ''
         self.string_without_letters = '!@#$%^&*'
@@ -82,3 +83,12 @@ class QuoteAnalysisTestCases(TestCase):
         self.assertEqual(count_repetitions(self.string_1), '{\'a\': 3, \'r\': 2, \'t\': 1}')
         self.assertEqual(count_repetitions(self.empty_string), '{}')
         self.assertEqual(count_repetitions(self.string_without_letters), '{}')
+
+
+class GetQuoteViewTestCases(TestCase):
+    def setUp(self):
+        self.url = reverse('quote-list')
+
+    def test_get_quote_endpoint(self):
+        response = client.get(self.url)
+        self.assertEqual(response.status_code, 200)
