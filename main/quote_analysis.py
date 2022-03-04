@@ -47,7 +47,6 @@ def count_total_vowels_consonants(quote):
     }
 
 
-# TODO: add logic for for '!!@#$%^&' stringlike testcases
 def count_average_word_length(quote):
     if not quote:
         return 0

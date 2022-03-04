@@ -1,3 +1,5 @@
+import time
+
 from django.test import TestCase, Client
 from django.urls import reverse
 
@@ -83,6 +85,49 @@ class QuoteAnalysisTestCases(TestCase):
         self.assertEqual(count_repetitions(self.string_1), '{\'a\': 3, \'r\': 2, \'t\': 1}')
         self.assertEqual(count_repetitions(self.empty_string), '{}')
         self.assertEqual(count_repetitions(self.string_without_letters), '{}')
+
+    def test_count_letters_performance(self):
+        text_file = open("main/long_string_for_tests.txt", "r")
+        data = text_file.read()
+        text_file.close()
+        start = time.time()
+        count_total_vowels_consonants(data)
+        end = time.time()
+        execution_time = end - start
+        self.assertTrue(execution_time < 0.1)
+
+    def test_count_average_word_performance(self):
+        text_file = open("main/long_string_for_tests.txt", "r")
+        data = text_file.read()
+        text_file.close()
+
+        start = time.time()
+        count_average_word_length(data)
+        end = time.time()
+        execution_time = end - start
+        self.assertTrue(execution_time < 0.1)
+
+    def test_get_longest_words_performance(self):
+        text_file = open("main/long_string_for_tests.txt", "r")
+        data = text_file.read()
+        text_file.close()
+
+        start = time.time()
+        get_longest_words(data)
+        end = time.time()
+        execution_time = end - start
+        self.assertTrue(execution_time < 0.1)
+
+    def test_count_repetitions_performance(self):
+        text_file = open("main/long_string_for_tests.txt", "r")
+        data = text_file.read()
+        text_file.close()
+
+        start = time.time()
+        count_repetitions(data)
+        end = time.time()
+        execution_time = end - start
+        self.assertTrue(execution_time < 0.1)
 
 
 class GetQuoteViewTestCases(TestCase):
