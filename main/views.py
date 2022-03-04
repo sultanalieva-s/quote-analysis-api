@@ -1,6 +1,5 @@
 import datetime
 import logging
-
 import requests
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
@@ -29,39 +28,43 @@ class GetQuotesView(APIView):
 
         while counter:
             response = requests.get(url=quotes_api_url).json()
+
             quote = response.get("quote")
 
-            quote_serializer = QuoteSerializer(data=response)
-
-            if quote_serializer.is_valid():
-                quote_object = quote_serializer.save()
-
-                total_letters = count_total_vowels_consonants(quote)
-                avg = count_average_word_length(quote)
-                longest_words = get_longest_words(quote)
-                repetitions = count_repetitions(quote)
-
-                quote_analysis_serializer = QuoteAnalysisSerializer(
-                    data={
-                        "quote": quote_object.id,
-                        "total_letters": total_letters["total_letters"],
-                        "average_word_length": avg,
-                        "total_vowels": total_letters["total_vowels"],
-                        "total_consonants": total_letters["total_consonants"],
-                        "letter_repetitions": repetitions,
-                        "longest_words": longest_words,
-                    }
-                )
-
-                if quote_analysis_serializer.is_valid(raise_exception=True):
-                    quote_analysis_serializer.save()
-                    quotes.append(quote_object)
-            else:
+            if Quote.objects.filter(quote=quote).exists():
                 logger.warning(
                     "A quote is already exists in the database. Time: "
                     + str(datetime.datetime.now())
                 )
                 quotes.append(Quote.objects.get(quote=quote))
+                continue
+
+            total_letters = count_total_vowels_consonants(quote)
+            avg = count_average_word_length(quote)
+            longest_words = get_longest_words(quote)
+            repetitions = count_repetitions(quote)
+
+            quote_analysis_serializer = QuoteAnalysisSerializer(
+                data={
+                    "total_letters": total_letters["total_letters"],
+                    "average_word_length": avg,
+                    "total_vowels": total_letters["total_vowels"],
+                    "total_consonants": total_letters["total_consonants"],
+                    "letter_repetitions": repetitions,
+                    "longest_words": longest_words,
+                }
+            )
+
+            if quote_analysis_serializer.is_valid(raise_exception=True):
+                analysis = quote_analysis_serializer.save()
+
+            quote_serializer = QuoteSerializer(
+                data={"quote": quote, "analysis": analysis.id}
+            )
+
+            if quote_serializer.is_valid(raise_exception=True):
+                quote_object = quote_serializer.save()
+                quotes.append(quote_object)
 
             counter -= 1
         return Response(
