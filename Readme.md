@@ -7,6 +7,11 @@ Swagger Docs: http://127.0.0.1:8000/api/v1/docs/
 ## How to Run Locally
 From project root directory run `docker-compose up`. If you want to run the app on the background
 run the command `docker-compose up -d`.
+
+!! Make sure you have applied initial migrations before you go to localhost/kanye-sayings/.
+This can be done with commands: `docker exec -it containername bash` and `./manage.py migrate`.
+!!
+
 To list containers and see their status run the command `docker-compose ps`.
 To stop containers without deleting them run `docker-compose stop`.
 To stop and delete the containers run `docker-compose down`.
